@@ -1,8 +1,10 @@
 # WeatherIndicator
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.3.
-
 This will show the weather status for entered city.
+
+Working Demo - https://stackblitz.com/github/hatkarpratik/weather-indicator
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.3.
 
 ## Development server
 
