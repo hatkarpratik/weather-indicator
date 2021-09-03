@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-md-6">
+        <input [(ngModel)]="selectedState" [typeahead]="states" [typeaheadScrollable]="false" class="form-control" 
+        placeholder="Please input state name"> 
+    </div>
+    <div class="col-md-6">            
+        <button type="submit" (click)="searchWeather()" class="btn btn-success btn-md">Search weather status</button>
+    </div>
+</div>
+<div class="weather-details mt-3 text-center" *ngIf="displayData">
+    <div class="weather-data celcius">
+        <!--<i class="fas fa-sun sun" *ngIf="displayData.isDay"></i> 
+        <i class="fas fa-moon moon" *ngIf="!displayData.isDay"></i> -->
+        {{displayData.tempCelcius}}<span>&#176;</span>
+    </div>
+    <div class="weather-data secondary">
+        {{displayData.tempMin}}<span>&#176;</span> Min / {{displayData.tempMax}}<span>&#176;</span> Max
+    </div>
+    <div class="weather-data secondary">
+        {{displayData.name}}
+    </div>
+    <div class="weather-data secondary">
+        <img [src]="weatherIcon">{{displayData.weather[0].main}}
+    </div>
+</div>
