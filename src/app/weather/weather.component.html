@@ -1,10 +1,10 @@
 <div class="row">
     <div class="col-md-6">
-        <input [(ngModel)]="selectedState" [typeahead]="states" [typeaheadScrollable]="false" class="form-control" 
+        <input [(ngModel)]="selectedCity" [typeahead]="city" [typeaheadScrollable]="false" class="form-control" 
         placeholder="Please input state name"> 
     </div>
     <div class="col-md-6">            
-        <button type="submit" (click)="searchWeather()" class="btn btn-success btn-md">Search weather status</button>
+        <button type="submit" (click)="getCityWeather()" class="btn btn-success btn-md">Search weather status</button>
     </div>
 </div>
 <div class="weather-details mt-3 text-center" *ngIf="displayData">

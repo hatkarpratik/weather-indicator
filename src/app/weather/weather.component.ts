@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup } from '@angular/forms';
-
 import { TypeaheadMatch } from 'ngx-bootstrap/typeahead/typeahead-match.class';  
+import { WeatherDataService } from "../services/weather-data.service";
+//import {Observable} from 'rxjs/Rx';
 
 @Component ({
   selector: 'app-weather',
@@ -10,8 +11,8 @@ import { TypeaheadMatch } from 'ngx-bootstrap/typeahead/typeahead-match.class';
 })
 
 export class WeatherComponent implements OnInit {
-  selectedState: string;
-  states: string[] = ['Mumbai','Pune','Chennai','Bengaluru','Delhi','Colorado',
+  selectedCity: string;
+  city: string[] = ['Mumbai','Pune','Chennai','Bengaluru','Delhi','Colorado',
   'Connecticut','Delaware','Florida','Georgia','Hawaii','Idaho','Illinois',
   'Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine',
   'Maryland','Massachusetts','Michigan','Minnesota','Mississippi',
@@ -22,26 +23,37 @@ export class WeatherComponent implements OnInit {
   'Virginia','Washington','West Virginia','Wisconsin','Wyoming'];
   displayData: any;
   weatherIcon: any;
+  appID: string = '9f9ca8e4c1d8fe7d3c6b9a5af32ada9a';
 
-  constructor() {}
+  constructor(private weatherService: WeatherDataService) {}
 
   ngOnInit(): void {   
 
   }
 
-  searchWeather() {
-      let currentDate = new Date();
-      this.displayData = JSON.parse('{"coord":{"lon":-0.13,"lat":51.51},"weather":[{"id":300,"main":"Drizzle","description":"light intensity drizzle","icon":"09d"}],"base":"stations","main":{"temp":280.32,"pressure":1012,"humidity":81,"temp_min":279.15,"temp_max":281.15},"visibility":10000,"wind":{"speed":4.1,"deg":80},"clouds":{"all":90},"dt":1485789600,"sys":{"type":1,"id":5091,"message":0.0103,"country":"GB","sunrise":1485762037,"sunset":1485794875},"id":2643743,"name":"London","cod":200}');
-      console.log(this.displayData);
+  getCityWeather() {
+
+      let route='https://api.openweathermap.org/data/2.5/weather?q=' + this.selectedCity + '&appid=' + this.appID;
+
+      fetch(route)
+      .then(response => response.json())
+      .then(data => {
+        this.displayData = data;
+        this.showWeather();
+      })
       
-      let sunsetTime = new Date(this.displayData.sys.sunset * 1000);
-      this.displayData.sunsetTIme = sunsetTime;
+      //let currentDate = new Date();
+      //let sunsetTime = new Date(this.displayData.sys.sunset * 1000);
+      //this.displayData.sunsetTIme = sunsetTime;      
+      //this.displayData.isDay = (currentDate.getTime() < sunsetTime.getTime());
       
-      this.displayData.isDay = (currentDate.getTime() < sunsetTime.getTime());
+  }
+
+  showWeather() {
       this.displayData.tempCelcius = (this.displayData.main.temp - 273.15).toFixed(0);
       this.displayData.tempMin = (this.displayData.main.temp_min - 273.15).toFixed(0);
       this.displayData.tempMax = (this.displayData.main.temp_max - 273.15).toFixed(0);
-      this.weatherIcon = "http://openweathermap.org/img/w/10d.png";
+      this.weatherIcon = 'http://openweathermap.org/img/w/' + this.displayData.weather[0].icon + '.png';
   }
 
 }
