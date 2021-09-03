@@ -1,25 +1,26 @@
-<div class="row">
-    <div class="col-md-6">
+<div class="row search-container">
+    <div class="col-md-3">
         <input [(ngModel)]="selectedCity" [typeahead]="city" [typeaheadScrollable]="false" class="form-control" 
-        placeholder="Please input state name"> 
+        placeholder="Please input name"> 
     </div>
     <div class="col-md-6">            
-        <button type="submit" (click)="getCityWeather()" class="btn btn-success btn-md">Search weather status</button>
+        <button type="submit" [disabled]="!selectedCity" (click)="getCityWeather()" class="btn btn-success btn-md">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
     </div>
 </div>
 <div class="weather-details mt-3 text-center" *ngIf="displayData">
     <div class="weather-data celcius">
-        <!--<i class="fas fa-sun sun" *ngIf="displayData.isDay"></i> 
-        <i class="fas fa-moon moon" *ngIf="!displayData.isDay"></i> -->
-        {{displayData.tempCelcius}}<span>&#176;</span>
+        {{displayData.tempCelcius}}<span>&#176;</span>C
     </div>
     <div class="weather-data secondary">
-        {{displayData.tempMin}}<span>&#176;</span> Min / {{displayData.tempMax}}<span>&#176;</span> Max
+        {{displayData.tempMin}}<span>&#176;</span>C Min / {{displayData.tempMax}}<span>&#176;</span>C Max
+    </div>
+    <div class="weather-data secondary">
+        <img [src]="weatherIcon"> {{displayData.weather[0].main}}
     </div>
     <div class="weather-data secondary">
         {{displayData.name}}
     </div>
-    <div class="weather-data secondary">
-        <img [src]="weatherIcon">{{displayData.weather[0].main}}
-    </div>
+    
 </div>
