@@ -1,13 +1,14 @@
-<div class="row search-container">
-    <div class="col-md-3">
-        <input [(ngModel)]="selectedCity" [typeahead]="city" [typeaheadScrollable]="false" class="form-control" 
+<div class="flexContainer">
+    <input [(ngModel)]="selectedCity" [typeahead]="city" [typeaheadScrollable]="false" class="input-field" 
         placeholder="Please input name"> 
-    </div>
-    <div class="col-md-6">            
-        <button type="submit" [disabled]="!selectedCity" (click)="getCityWeather()" class="btn btn-success btn-md">
-            <i class="fa fa-search" aria-hidden="true"></i>
-        </button>
-    </div>
+    <button type="submit" [disabled]="!selectedCity" (click)="getCityWeather()" class="btn btn-success btn-md">
+        <i class="fa fa-search" aria-hidden="true"></i>
+    </button>
+</div>
+<div>
+    <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+        <p style="font-size: 20px; color: white">Loading...</p>
+    </ngx-spinner>
 </div>
 <div class="weather-details mt-3 text-center" *ngIf="displayData">
     <div class="weather-data celcius">

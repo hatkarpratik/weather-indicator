@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { TypeaheadMatch } from 'ngx-bootstrap/typeahead/typeahead-match.class';  
 import { WeatherDataService } from "../services/weather-data.service";
 //import {Observable} from 'rxjs/Rx';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component ({
   selector: 'app-weather',
@@ -25,14 +26,14 @@ export class WeatherComponent implements OnInit {
   weatherIcon: any;
   appID: string = '9f9ca8e4c1d8fe7d3c6b9a5af32ada9a';
 
-  constructor(private weatherService: WeatherDataService) {}
+  constructor(private spinner: NgxSpinnerService) {}
 
   ngOnInit(): void {   
 
   }
 
   getCityWeather() {
-
+      this.spinner.show();      
       let route='https://api.openweathermap.org/data/2.5/weather?q=' + this.selectedCity + '&appid=' + this.appID;
 
       fetch(route)
@@ -54,6 +55,7 @@ export class WeatherComponent implements OnInit {
       this.displayData.tempMin = (this.displayData.main.temp_min - 273.15).toFixed(0);
       this.displayData.tempMax = (this.displayData.main.temp_max - 273.15).toFixed(0);
       this.weatherIcon = 'http://openweathermap.org/img/w/' + this.displayData.weather[0].icon + '.png';
+      this.spinner.hide();
   }
 
 }
