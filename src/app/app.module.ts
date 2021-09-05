@@ -12,12 +12,14 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { AppComponent } from './app.component';
 import { WeatherComponent } from './weather/weather.component';
 import { AboutComponent } from './about/about.component';
+import { AlphabetOnlyDirective } from './directives/alphabet-only.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     WeatherComponent,
-    AboutComponent
+    AboutComponent,
+    AlphabetOnlyDirective
   ],
   imports: [
     BrowserModule,

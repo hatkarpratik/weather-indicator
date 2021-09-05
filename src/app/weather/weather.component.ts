@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup } from '@angular/forms';
 import { TypeaheadMatch } from 'ngx-bootstrap/typeahead/typeahead-match.class';  
 import { WeatherDataService } from "../services/weather-data.service";
@@ -25,6 +26,7 @@ export class WeatherComponent implements OnInit {
   displayData: any;
   weatherIcon: any;
   appID: string = '9f9ca8e4c1d8fe7d3c6b9a5af32ada9a';
+  invalidData: boolean = false;
 
   constructor(private spinner: NgxSpinnerService) {}
 
@@ -39,15 +41,19 @@ export class WeatherComponent implements OnInit {
       fetch(route)
       .then(response => response.json())
       .then(data => {
-        this.displayData = data;
-        this.showWeather();
+        console.log(data);
+        if(data.cod === '404') {
+          this.invalidData = true;
+          this.spinner.hide();
+        } else {
+          console.log(data);
+          this.invalidData = false;
+          this.displayData = data;
+          this.showWeather();  
+        }
+        
       })
-      
-      //let currentDate = new Date();
-      //let sunsetTime = new Date(this.displayData.sys.sunset * 1000);
-      //this.displayData.sunsetTIme = sunsetTime;      
-      //this.displayData.isDay = (currentDate.getTime() < sunsetTime.getTime());
-      
+       
   }
 
   showWeather() {

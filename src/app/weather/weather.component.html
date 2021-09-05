@@ -1,5 +1,5 @@
 <div class="flexContainer">
-    <input [(ngModel)]="selectedCity" [typeahead]="city" [typeaheadScrollable]="false" class="input-field" 
+    <input [(ngModel)]="selectedCity" class="input-field" appAlphabetOnly
         placeholder="Please input name"> 
     <button type="submit" [disabled]="!selectedCity" (click)="getCityWeather()" class="btn btn-success btn-md">
         <i class="fa fa-search" aria-hidden="true"></i>
@@ -10,7 +10,7 @@
         <p style="font-size: 20px; color: white">Loading...</p>
     </ngx-spinner>
 </div>
-<div class="weather-details mt-3 text-center" *ngIf="displayData">
+<div class="weather-details mt-3 text-center" *ngIf="!invalidData && displayData">
     <div class="weather-data celcius">
         {{displayData.tempCelcius}}<span>&#176;</span>C
     </div>
@@ -18,10 +18,12 @@
         {{displayData.tempMin}}<span>&#176;</span>C Min / {{displayData.tempMax}}<span>&#176;</span>C Max
     </div>
     <div class="weather-data secondary">
-        <img [src]="weatherIcon"> {{displayData.weather[0].main}}
+        <img [src]="weatherIcon" class="weather-img">{{displayData.weather[0].main}}
     </div>
     <div class="weather-data secondary">
         {{displayData.name}}
-    </div>
-    
+    </div> 
+</div>
+<div class="mt-3 text-center" *ngIf="invalidData">
+    <i class="far fa-times-circle"></i> Invalid name entered!! Please refine your search.
 </div>
