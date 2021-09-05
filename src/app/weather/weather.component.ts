@@ -5,6 +5,7 @@ import { TypeaheadMatch } from 'ngx-bootstrap/typeahead/typeahead-match.class';
 import { WeatherDataService } from "../services/weather-data.service";
 //import {Observable} from 'rxjs/Rx';
 import { NgxSpinnerService } from "ngx-spinner";
+import { key } from '../config';
 
 @Component ({
   selector: 'app-weather',
@@ -25,7 +26,7 @@ export class WeatherComponent implements OnInit {
   'Virginia','Washington','West Virginia','Wisconsin','Wyoming'];
   displayData: any;
   weatherIcon: any;
-  appID: string = '9f9ca8e4c1d8fe7d3c6b9a5af32ada9a';
+  appID: string;
   invalidData: boolean = false;
 
   constructor(private spinner: NgxSpinnerService) {}
@@ -35,25 +36,23 @@ export class WeatherComponent implements OnInit {
   }
 
   getCityWeather() {
-      this.spinner.show();      
-      let route='https://api.openweathermap.org/data/2.5/weather?q=' + this.selectedCity + '&appid=' + this.appID;
+      this.spinner.show();    
+      //this.appID = key;  
+      let route='https://api.openweathermap.org/data/2.5/weather?q=' + this.selectedCity + '&appid=' + key;
 
       fetch(route)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
         if(data.cod === '404') {
           this.invalidData = true;
           this.spinner.hide();
         } else {
-          console.log(data);
           this.invalidData = false;
           this.displayData = data;
           this.showWeather();  
         }
         
-      })
-       
+      })       
   }
 
   showWeather() {
